@@ -5,6 +5,7 @@
   "description": "Desktop client for Chobots.world",
   "main": "./build/main.js",
   "scripts": {
+    "build": "tsc",
     "start": "tsc && electron .",
     "make-win": "yarn tsc && electron-builder build --win --publish never",
     "make-mac": "electron-builder build --mac --publish never",
