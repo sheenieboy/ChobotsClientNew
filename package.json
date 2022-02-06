@@ -4,11 +4,10 @@
   "version": "1.0.0",
   "description": "Desktop client for Chobots.world",
   "main": "./build/main.js",
-  "packageManager": "yarn@3.1.1",
   "scripts": {
     "build": "tsc",
     "start": "tsc && electron .",
-    "make-win": "yarn tsc && electron-builder build --win --publish never",
+    "make-win": "tsc && electron-builder build --win --publish never",
     "make-mac": "electron-builder build --mac --publish never",
     "make-win-publish": "electron-builder build --win --publish onTagOrDraft",
     "make-mac-publish": "electron-builder build --mac --publish onTagOrDraft"
