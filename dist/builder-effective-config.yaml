@@ -1,0 +1,17 @@
+directories:
+  output: dist
+  buildResources: build
+appId: com.chobots.desktop
+productName: Chobots Client
+icon: pages/assets/icons/icon.png
+asar: false
+win:
+  publish: github
+mac:
+  publish: github
+dmg:
+  window:
+    width: 540
+    height: 380
+files: []
+electronVersion: 17.0.0

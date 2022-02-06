@@ -1,0 +1,26 @@
+:root {
+	--accent-color: #78aeed;
+	--accent-bg-color: #3584e4;
+	--foreground-color: #ffffff;
+
+	--background-body: #242424;
+	--background: #1e1e1e; /* Switch this and background-body around ? */
+	--background-alt: #383838;
+	--selection: var(--accent-color);
+	--text-main: var(--foreground-color);
+	--text-bright: var(--foreground-color);
+	--text-muted: rgba(255, 255, 255, 0.8);
+	--links: var(--accent-color);
+	--focus: var(--accent-color);
+	--border: var(--foreground-color);
+	--code: #393939;
+	/*--animation-duration: */
+	--button-base: #393939;
+	--button-hover: #454545;
+	--scrollbar-thumb: #616161;
+	--scrollbar-thumb-hover: #888888;
+	--form-placeholder: var(--text-muted);
+	--form-text: var(--text-main);
+	--variable: #dc8add; /* kognise said these are pink i trust her with my life */
+	--highlight: var(--accent-color);
+}
