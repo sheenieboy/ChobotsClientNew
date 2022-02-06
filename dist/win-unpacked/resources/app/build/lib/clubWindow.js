@@ -48,8 +48,6 @@ let branding = {
 class ClubWindow {
     constructor(title, icon, buttons, currentPage, width, height) {
         // Set up our properties
-        console.log('HEY EBON TELL ME WHAT THIS SAYS THANKS <3 --> ' + rootDir);
-        console.log('AND THIS TOO!!!! --> ' + path_1.default.join(rootDir, 'pages/frame.html'));
         this._maximized = false;
         this._focused = false;
         this._fullscreen = false;
@@ -80,8 +78,8 @@ class ClubWindow {
         this.browser.setMenu(null);
         this.clearCache();
         // TODO: replace this with DevTools in the dropdown
-        //if (!Electron.app.isPackaged) this.browser.webContents.openDevTools({mode: 'undocked'});
-        this.browser.webContents.openDevTools({ mode: 'undocked' });
+        if (!Electron.app.isPackaged)
+            this.browser.webContents.openDevTools({ mode: 'undocked' });
         // Prevent navigating away from frame
         function handleRedirect(event, url) {
             console.error('frame tried to navigate to ' + url);

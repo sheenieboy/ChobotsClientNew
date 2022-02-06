@@ -10,6 +10,7 @@ files:
       - ./build
       - ./pages
       - ./flashPlugin
+      - ./ABOUT.txt
 win:
   publish: github
 mac:
