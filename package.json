@@ -15,7 +15,7 @@
   "devDependencies": {
     "@types/electron-store": "^3.2.0",
     "electron": "^8.5.5",
-    "electron-builder": "^22.14.5",
+    "electron-builder": "^22.14.13",
     "electron-packager": "^15.4.0",
     "typescript": "^4.5.5"
   },
@@ -44,7 +44,12 @@
     "productName": "Chobots Client",
     "icon": "pages/assets/icons/icon.png",
     "asar": "false",
-    "files": ["./build", "./pages", "./flashPlugin", "./ABOUT.txt"],
+    "files": [
+      "./build",
+      "./pages",
+      "./flashPlugin",
+      "./ABOUT.txt"
+    ],
     "win": {
       "publish": "github"
     },
