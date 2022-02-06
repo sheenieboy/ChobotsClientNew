@@ -5,6 +5,11 @@ appId: com.chobots.desktop
 productName: Chobots Client
 icon: pages/assets/icons/icon.png
 asar: false
+files:
+  - filter:
+      - ./build
+      - ./pages
+      - ./flashPlugin
 win:
   publish: github
 mac:
@@ -13,5 +18,4 @@ dmg:
   window:
     width: 540
     height: 380
-files: []
-electronVersion: 17.0.0
+electronVersion: 8.5.5

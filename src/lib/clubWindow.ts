@@ -13,7 +13,7 @@ import { WindowState } from "./windowState";
 
 // FIXME: same thing as i said about rootDir in updater
 const rootDir = __dirname.replace(new RegExp('build/lib$'), '').replace(new RegExp('build\\\\lib$'), '');
-console.log(rootDir)
+
 // FIXME: again, load this better
 let branding: Branding = {
 	name: 'Chobots',

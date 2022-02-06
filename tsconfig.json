@@ -16,6 +16,7 @@
 		"src/**/*.ts"
 	],
 	"exclude": [
-		"src/lib/template.ts"
+		"src/lib/template.ts",
+		"node_modules"
 	]
 }

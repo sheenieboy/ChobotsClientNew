@@ -1,20 +1,21 @@
 {
-  "name": "chobots",
+  "name": "chobotsplayer",
   "icon": "favicon.ico",
   "version": "1.0.0",
   "description": "Desktop client for Chobots.world",
-  "main": "build/main.js",
+  "main": "./build/main.js",
   "scripts": {
     "start": "tsc && electron .",
-    "make-win": "electron-builder build --win --publish never",
+    "make-win": "yarn tsc && electron-builder build --win --publish never",
     "make-mac": "electron-builder build --mac --publish never",
     "make-win-publish": "electron-builder build --win --publish onTagOrDraft",
     "make-mac-publish": "electron-builder build --mac --publish onTagOrDraft"
   },
   "devDependencies": {
     "@types/electron-store": "^3.2.0",
-    "electron": "^8.5.2",
-    "electron-builder": "^22.7.0",
+    "electron": "^8.5.5",
+    "electron-builder": "^22.14.5",
+    "electron-packager": "^15.4.0",
     "typescript": "^4.5.5"
   },
   "dependencies": {
@@ -25,26 +26,24 @@
     "discord-rpc": "^4.0.1",
     "electron-store": "^8.0.1",
     "esm": "^3.2.25",
-    "node-gyp": "^8.4.1",
-    "request": "^2.88.2",
-    "utf8": "^3.0.0",
-    "uuid": "^8.3.2"
+    "request": "^2.88.2"
   },
   "bugs": {
-    "url": "https://github.com/sheenieboy/ChobotsWorldClient"
+    "url": "https://github.com/sheenieboy/ChobotsClientNew"
   },
-  "homepage": "https://github.com/sheenieboy/ChobotsWorldClient",
+  "homepage": "https://github.com/sheenieboy/ChobotsClientNew",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sheenieboy/ChobotsWorldClient.git"
+    "url": "git+https://github.com/sheenieboy/ChobotsClientNew.git"
   },
   "author": "Chobots, Inc",
   "license": "BSD-2-Clause",
   "build": {
     "appId": "com.chobots.desktop",
     "productName": "Chobots Client",
-    "icon": "favicon.ico",
+    "icon": "pages/assets/icons/icon.png",
     "asar": "false",
+    "files": ["./build", "./pages", "./flashPlugin"],
     "win": {
       "publish": "github"
     },

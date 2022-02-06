@@ -1,0 +1,16 @@
+— About Chotopia Desktop —
+xyz.puyo.club, xyz.puyo.club.chotopia
+Copyright © 2022, Puyo <hi@puyo.xyz>, all rights reserved.
+
+Using Electron and the PepperFlash plugin.
+Window style loosely based on Adwaita (libadwaita).
+
+— About Chotopia.us —
+The "Chobots" brand and any Chobots assets © Vayersoft LLC, 2007-2010
+This Chobots instance is a re-creation and is for educational and entertainment purposes only.
+Any in-game purchases or donations go towards supporting the server costs.
+
+By creating an account you agree to our Terms of Use (https://chotopia.us/#/terms) and our Privacy Policy (https://chotopia.us/#/privacy).
+
+Visit https://chotopia.us/#/support for support.
+https://chotopia.us

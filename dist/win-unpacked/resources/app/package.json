@@ -1,0 +1,27 @@
+{
+  "name": "chobotsplayer",
+  "icon": "favicon.ico",
+  "version": "1.0.0",
+  "description": "Desktop client for Chobots.world",
+  "main": "./build/main.js",
+  "dependencies": {
+    "@types/discord-rpc": "^4.0.0",
+    "@types/node": "^17.0.8",
+    "@types/request": "^2.48.8",
+    "@types/uuid": "^8.3.4",
+    "discord-rpc": "^4.0.1",
+    "electron-store": "^8.0.1",
+    "esm": "^3.2.25",
+    "request": "^2.88.2"
+  },
+  "bugs": {
+    "url": "https://github.com/sheenieboy/ChobotsClientNew"
+  },
+  "homepage": "https://github.com/sheenieboy/ChobotsClientNew",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sheenieboy/ChobotsClientNew.git"
+  },
+  "author": "Chobots, Inc",
+  "license": "BSD-2-Clause"
+}

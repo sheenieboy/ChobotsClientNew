@@ -1,0 +1,14 @@
+/*
+	xyz.puyo.club, xyz.puyo.club.chotopia
+	Copyright (C) 2022, Puyo <hi@puyo.xyz>, all rights reserved.
+*/
+
+:root, body, #game {
+	height: 100%; width: 100%;
+	margin: 0;
+	padding: 0;
+}
+body {
+	overflow: hidden;
+	background-color: #353535;
+}

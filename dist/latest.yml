@@ -1,0 +1,8 @@
+version: 1.0.0
+files:
+  - url: Chobots-Client-Setup-1.0.0.exe
+    sha512: 6bPtyrNV0rPuQJdGQ0na5nonGBtj1x29PuncBhs5/53z2u02DHg8e3/huwpSJjhBT7apV9uF7sS5b4ctixn6yA==
+    size: 83404391
+path: Chobots-Client-Setup-1.0.0.exe
+sha512: 6bPtyrNV0rPuQJdGQ0na5nonGBtj1x29PuncBhs5/53z2u02DHg8e3/huwpSJjhBT7apV9uF7sS5b4ctixn6yA==
+releaseDate: '2022-02-06T17:53:13.005Z'
