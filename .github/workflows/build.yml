@@ -9,7 +9,7 @@ jobs:
     build:
         runs-on: macos-latest
         env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GH_TOKEN: ${{ secrets.github_token }}
 
         strategy:
             matrix:
