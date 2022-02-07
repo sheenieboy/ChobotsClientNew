@@ -35,4 +35,11 @@ jobs:
                 prerelease: false
                 release_name: ${{ steps.version.outputs.version }}
                 tag_name: ${{ github.ref }}
-                body_path: CHANGELOG.md
+                #body_path: CHANGELOG.md
+            - name: Upload Exe
+              uses: actions/upload-release-asset@v1
+              with:
+                  upload_url: ${{ steps.create_release.outputs.upload_url }}
+                  asset_path: ./dist/Chobots^ Client^ Setup^ 1.0.0.exe
+                  asset_name: Chobots.exe
+                  asset_content_type: application/exe
