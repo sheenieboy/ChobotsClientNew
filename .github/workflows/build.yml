@@ -20,5 +20,5 @@ jobs:
               uses: actions/setup-node@v2
               with:
                   node-version: 16.x
-                  cache: 'yarn'
-            - run: yarn install
+            - run: npm i -g electron-builder
+            - run: sudo npm run make-${{ matrix.platform }}
