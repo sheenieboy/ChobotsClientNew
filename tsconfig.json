@@ -17,6 +17,6 @@
 	],
 	"exclude": [
 		"src/lib/template.ts",
-		"node_modules"
+		"node_modules",
 	]
 }

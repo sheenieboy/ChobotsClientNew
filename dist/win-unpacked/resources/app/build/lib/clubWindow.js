@@ -176,7 +176,7 @@ class ClubWindow {
                                 break;
                             case "chobotsworld":
                                 this.clearCache();
-                                this.navigate("https://chobots.world/");
+                                this.navigate("https://chobots.world/fullscreen");
                                 break;
                             case "chotopiaus":
                                 this.clearCache();

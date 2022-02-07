@@ -161,7 +161,7 @@ function startup() {
                         switch (channel) {
                             case "updateFinished":
                                 if (store.get('agreedToTerms')) {
-                                    mainWindow.navigate('https://chotopia.us/game12/game.html');
+                                    mainWindow.navigate('https://chobots.world/fullscreen');
                                     mainWindow.buttons = 'ingame';
                                 }
                                 else

@@ -7,6 +7,7 @@ icon: pages/assets/icons/icon.png
 asar: false
 files:
   - filter:
+      - '!src/*'
       - ./build
       - ./pages
       - ./flashPlugin
