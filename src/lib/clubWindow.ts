@@ -185,7 +185,8 @@ export class ClubWindow {
 								break;
 							case "chotopiaus":
 								this.clearCache();
-								this.navigate(`${rootDir}/pages/game.html`);
+								//this.navigate(`${rootDir}/pages/game.html`);
+								this.navigate(`https://chotopia.us/game12/game2.html`);
 								break;
 							case "chobotsca":
 								this.clearCache();
