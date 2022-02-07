@@ -106,7 +106,7 @@ export class ClubWindow {
 		this.clearCache();
 
 		// TODO: replace this with DevTools in the dropdown
-		if (!Electron.app.isPackaged) this.browser.webContents.openDevTools({mode: 'undocked'});
+		//if (!Electron.app.isPackaged) this.browser.webContents.openDevTools({mode: 'undocked'});
 
 		// Prevent navigating away from frame
 		function handleRedirect(event: Electron.Event, url: string) {
@@ -130,8 +130,7 @@ export class ClubWindow {
 
 		// Handle frame events
 		this.browser.webContents.on('ipc-message', (event, channel, ...args) => { this.handleIpcMessage(event, channel, args) }); // we have to call it inside an arrow function, or this = EventEmitter and not ClubWindow
-
-		this.browser.loadFile(path.join(rootDir, 'pages/frame.html')).catch(console.error);
+		this.browser.loadFile(path.join(rootDir, '/pages/frame.html')).catch(console.error);
 		this.browser.webContents.on('did-stop-loading', () => {
 			this.updateState();
 		});
@@ -185,11 +184,11 @@ export class ClubWindow {
 								break;
 							case "chotopiaus":
 								this.clearCache();
-								this.navigate("https://chotopia.us/game12/game.html");
+								this.navigate(`${rootDir}/pages/game.html`);
 								break;
 							case "chobotsca":
 								this.clearCache();
-								this.navigate("https://chobots.ca/play");
+								this.navigate("https://chobots.ca/game/");
 								break;
 							default:
 								console.error('tried to click a button that does not exist, on a layout that DOES exist');

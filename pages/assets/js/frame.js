@@ -101,8 +101,8 @@ function butt(id) {
 		case "chotopiaus":
 			ipcRenderer.send('buttons', 'ingame', 'chotopiaus');
 			break;
-		case "chobotseu":
-			ipcRenderer.send('buttons', 'ingame', 'chobotseu');
+		case "chobotsca":
+			ipcRenderer.send('buttons', 'ingame', 'chobotsca');
 			break;
 		default:
 			alert('Oops! You pressed a button that... doesn\'t exist?');
@@ -168,8 +168,4 @@ ipcRenderer.on('stateUpdate', (event, newState) => {
 		contentFrame.src = newState.currentPage.url;
 		currentPageId = newState.currentPage.id;
 	}
-});
-
-ipcRenderer.on('parseAmf', (event, data) => {
-	ipcRenderer.send('parsedAmf', AMF.parse(data));
 });
