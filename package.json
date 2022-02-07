@@ -1,5 +1,5 @@
 {
-  "name": "chobotsplayer",
+  "name": "@sheenieboy/chobots",
   "icon": "favicon.ico",
   "version": "1.0.0",
   "description": "Desktop client for Chobots.world",
@@ -28,6 +28,9 @@
     "electron-store": "^8.0.1",
     "esm": "^3.2.25",
     "request": "^2.88.2"
+  },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
   },
   "bugs": {
     "url": "https://github.com/sheenieboy/ChobotsClientNew"
