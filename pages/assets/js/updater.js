@@ -28,8 +28,12 @@ window.onload = () => {
 	//console.log('sending updatePageReady');
 	ipcRenderer.send('updatePageReady');
 	const rootDir = __dirname;//.replace(new RegExp('pages$'), '');
-	console.log(rootDir);
 	const { version } = require('../package.json');
+	let branding = {
+		name: 'Chotopia',
+		iconPath: rootDir + '/build/icon.png',
+		nutsUrl: 'https://get.chotopia.us'
+	};
 
 	updaterText.textContent = 'Setting up...'
 	setTimeout(() => {

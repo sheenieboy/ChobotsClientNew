@@ -130,6 +130,7 @@ export class ClubWindow {
 
 		// Handle frame events
 		this.browser.webContents.on('ipc-message', (event, channel, ...args) => { this.handleIpcMessage(event, channel, args) }); // we have to call it inside an arrow function, or this = EventEmitter and not ClubWindow
+
 		this.browser.loadFile(path.join(rootDir, '/pages/frame.html')).catch(console.error);
 		this.browser.webContents.on('did-stop-loading', () => {
 			this.updateState();
