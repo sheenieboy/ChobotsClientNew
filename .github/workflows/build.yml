@@ -1,5 +1,4 @@
 name: Build/release
-
 on:
     push:
         branches:
@@ -14,7 +13,6 @@ jobs:
         strategy:
             matrix:
                 platform: [win, mac, linux]
-                # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
         steps:
             - uses: actions/checkout@v2
@@ -22,4 +20,4 @@ jobs:
               uses: actions/setup-node@v2
               with:
                   node-version: 16.x
-            - run: npm run make-${{ matrix.platform }}
+            - run: sudo npm run make-${{ matrix.platform }}
