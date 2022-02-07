@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc && electron .",
-    "make-win": "tsc && electron-builder build --win --publish never",
+    "make-win": "sudo electron-builder build --win --publish never",
     "make-mac": "electron-builder build --mac --publish never",
     "make-win-publish": "electron-builder build --win --publish onTagOrDraft",
     "make-mac-publish": "electron-builder build --mac --publish onTagOrDraft"
