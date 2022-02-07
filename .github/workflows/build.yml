@@ -9,6 +9,7 @@ jobs:
         runs-on: macos-latest
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_TOKEN: ${{ github.token }}
 
         strategy:
             matrix:
@@ -23,3 +24,15 @@ jobs:
                   cache: 'yarn'
             - run: yarn install
             - run: yarn run make-${{ matrix.platform }}-publish
+            - name: version
+              run: echo "::set-output name=version::$(./bin/azblogfilter --version)"
+              id: version
+            - name: release
+              uses: actions/create-release@v1
+              id: create_release
+              with:
+                draft: false
+                prerelease: false
+                release_name: ${{ steps.version.outputs.version }}
+                tag_name: ${{ github.ref }}
+                body_path: CHANGELOG.md
