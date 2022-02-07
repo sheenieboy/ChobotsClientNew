@@ -1,7 +1,7 @@
 {
   "name": "@sheenieboy/chobots",
   "icon": "favicon.ico",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Desktop client for Chobots.world",
   "main": "./build/main.js",
   "scripts": {
