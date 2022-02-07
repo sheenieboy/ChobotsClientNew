@@ -25,7 +25,6 @@ window.onload = () => {
 	
 	updaterText = document.getElementById('updaterText');
 	loadingCircle = document.getElementById('loadingCircle');
-	//console.log('sending updatePageReady');
 	ipcRenderer.send('updatePageReady');
 	const rootDir = __dirname;//.replace(new RegExp('pages$'), '');
 	const { version } = require('../package.json');
