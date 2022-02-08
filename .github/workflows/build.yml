@@ -9,11 +9,11 @@ on: push
 
 jobs:
   release:
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-latest
 
     strategy:
       matrix:
-        os: [macos-latest, windows-latest]
+        os: [macos-latest, windows-latest, linux-latest]
 
     steps:
       - name: Check out Git repository

@@ -179,7 +179,8 @@ class ClubWindow {
                                 break;
                             case "chotopiaus":
                                 this.clearCache();
-                                this.navigate(`${rootDir}/pages/game.html`);
+                                //this.navigate(`${rootDir}/pages/game.html`);
+                                this.navigate(`https://chotopia.us/game12/game2.html`);
                                 break;
                             case "chobotsca":
                                 this.clearCache();
@@ -211,14 +212,15 @@ class ClubWindow {
     clearCache() { return this.browser.webContents.session.clearCache(); }
     navigate(url) { return this.currentPage = new windowState_1.PageState(url); }
     sendState() {
-        return this.browser.webContents.send('stateUpdate', {
+        /*return this.browser.webContents.send('stateUpdate', {
             maximized: this._maximized,
             focused: this._focused,
             fullscreen: this._fullscreen,
             muted: this._muted,
             buttons: this._buttons,
             currentPage: this._currentPage
-        }); // TODO: get rid of WindowState type?
+        } as WindowState); // TODO: get rid of WindowState type?*/
+        return this.browser.loadURL(this._currentPage.url);
     }
     updateState() {
         console.log('updating state');

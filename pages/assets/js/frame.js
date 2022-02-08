@@ -49,8 +49,6 @@ window.onload = () => {
 	contentFrame = document.getElementById('content-iframe');
 	contentFrameHolder = document.getElementById('content')
 
-
-
 	contentFrame.addEventListener('console-message', (e) => {
 		console.log(`[from content frame] ln${e.line} lv${e.level} src ${e.sourceId} ${e.message}`);
 	});
