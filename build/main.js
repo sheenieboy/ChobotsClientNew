@@ -153,7 +153,6 @@ function startup() {
     });
     if (!Electron.app.isPackaged)
         mainWindow.browser.webContents.openDevTools({ mode: 'undocked' });
-    mainWindow.navigate('https://chobots.world/fullscreen');
     mainWindow.browser.webContents.on('ipc-message', (event, channel, ...args) => {
         switch (channel) {
             case "containerIsReady":
@@ -164,7 +163,7 @@ function startup() {
                         switch (channel) {
                             case "updateFinished":
                                 if (store.get('agreedToTerms')) {
-                                    mainWindow.navigate('https://chobots.world/fullscreen');
+                                    mainWindow.navigate('https://chobots.world/index');
                                     mainWindow.buttons = 'ingame';
                                 }
                                 else

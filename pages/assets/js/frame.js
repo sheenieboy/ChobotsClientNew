@@ -165,5 +165,6 @@ ipcRenderer.on('stateUpdate', (event, newState) => {
 		contentFrame.src = "about:blank";
 		contentFrame.src = newState.currentPage.url;
 		currentPageId = newState.currentPage.id;
+		contentFrame.removeAttribute("nodeIntegration");// = true;
 	}
 });

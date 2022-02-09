@@ -212,15 +212,14 @@ class ClubWindow {
     clearCache() { return this.browser.webContents.session.clearCache(); }
     navigate(url) { return this.currentPage = new windowState_1.PageState(url); }
     sendState() {
-        /*return this.browser.webContents.send('stateUpdate', {
+        return this.browser.webContents.send('stateUpdate', {
             maximized: this._maximized,
             focused: this._focused,
             fullscreen: this._fullscreen,
             muted: this._muted,
             buttons: this._buttons,
             currentPage: this._currentPage
-        } as WindowState); // TODO: get rid of WindowState type?*/
-        return this.browser.loadURL(this._currentPage.url);
+        }); // TODO: get rid of WindowState type?
     }
     updateState() {
         console.log('updating state');

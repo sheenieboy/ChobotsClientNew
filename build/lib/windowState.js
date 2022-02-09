@@ -29,6 +29,7 @@ class PageState {
     constructor(url) {
         this.id = uuid.v4();
         this.url = url;
+        this.nodeIntegrationEnabled = false;
     }
 }
 exports.PageState = PageState;
