@@ -56,6 +56,16 @@
       "./flashPlugin",
       "./ABOUT.txt"
     ],
+<<<<<<< HEAD
+=======
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "sheenieboy",
+        "repo": "ChobotsClientNew"
+      }
+    ],
+>>>>>>> 716b4132f85133174d602c469bacbf6ca6af8310
     "win": {
       "publish": "github"
     },

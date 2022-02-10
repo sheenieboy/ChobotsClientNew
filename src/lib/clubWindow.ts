@@ -6,19 +6,19 @@
 import * as Electron from 'electron';
 import fs from "fs";
 import path from "path";
-
+import { autoUpdater } from 'electron-updater';
 import { PageState } from "./windowState";
 import { Branding } from "./branding";
 import { WindowState } from "./windowState";
-
 // FIXME: same thing as i said about rootDir in updater
 const rootDir = __dirname.replace(new RegExp('build/lib$'), '').replace(new RegExp('build\\\\lib$'), '');
 
+const dialog = Electron.dialog;
 // FIXME: again, load this better
 let branding: Branding = {
 	name: 'Chobots',
 	iconPath: rootDir + '/build/icon.png',
-	nutsUrl: 'https://get.chotopia.us',
+	nutsUrl: 'https://get.chobots.world',
 	rpcClientId: '930243959463239730',
 	rpcDetails: '🔗 chobots.world',
 	rpcLargeImage: 'chobots',
@@ -26,7 +26,6 @@ let branding: Branding = {
 	rpcSmallImage: 'small3',
 	rpcSmallImageText: undefined
 };
-
 
 export class ClubWindow {
 	browser: Electron.BrowserWindow;
@@ -101,12 +100,25 @@ export class ClubWindow {
 				webviewTag: true, // instead of iframe
 			}
 		});
+		autoUpdater.on('update-downloaded', () => {
+			const dialogOpts = {
+				type: 'info',
+				buttons: ['Restart', 'Not Now. On next Restart'],
+				title: 'Update',
+				message: process.platform === 'win32' ? "Updated" : "",//releaseNotes : releaseName,
+				detail: 'A New Version has been Downloaded. Restart Now to Complete the Update.'
+			}
+			Electron.dialog.showMessageBox(this.browser, dialogOpts).then((returnValue) => {
+				if (returnValue.response === 0) autoUpdater.quitAndInstall()
+			})
+
+		})
 
 		this.browser.setMenu(null);
 		this.clearCache();
 
 		// TODO: replace this with DevTools in the dropdown
-		//if (!Electron.app.isPackaged) this.browser.webContents.openDevTools({mode: 'undocked'});
+		this.browser.webContents.openDevTools({mode: 'undocked'});
 
 		// Prevent navigating away from frame
 		function handleRedirect(event: Electron.Event, url: string) {
@@ -144,6 +156,7 @@ export class ClubWindow {
 				switch(args[0]) {
 					case "close":
 						this.browser.close();
+						//autoUpdater.quitAndInstall();
 						break;
 					case "maximize":
 						this.maximized ? this.browser.restore() : this.browser.maximize();
