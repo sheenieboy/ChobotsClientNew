@@ -85,7 +85,10 @@ class ClubWindow {
                 message: process.platform === 'win32' ? "Updated" : "",
                 detail: 'A New Version has been Downloaded. Restart Now to Complete the Update.'
             };
-            Electron.dialog.showMessageBox(this.browser, dialogOpts);
+            Electron.dialog.showMessageBox(this.browser, dialogOpts).then((returnValue) => {
+                if (returnValue.response === 0)
+                    electron_updater_1.autoUpdater.quitAndInstall();
+            });
         });
         this.browser.setMenu(null);
         this.clearCache();
