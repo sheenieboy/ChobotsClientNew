@@ -29,13 +29,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Electron = __importStar(require("electron"));
 const app = Electron.app;
 const shell = Electron.shell;
+const dialog = Electron.dialog;
 const path = __importStar(require("path"));
 const os = __importStar(require("os"));
 const DiscordRPC = __importStar(require("discord-rpc"));
 const electron_store_1 = __importDefault(require("electron-store"));
+const electron_updater_1 = require("electron-updater");
 const windowState_1 = require("./lib/windowState");
 const clubWindow_1 = require("./lib/clubWindow");
+const electron_updater_1 = require("electron-updater");
+const logger = require("electron-log");
+electron_updater_1.autoUpdater.logger = logger;
+logger.transports.file.level = "debug";
 const rootDir = __dirname.replace(new RegExp('build$'), '');
+const logger = require("electron-log");
+electron_updater_1.autoUpdater.logger = logger;
+logger.transports.file.level = "debug";
 // TODO: load this from a json file or something
 let branding = {
     name: 'Chotopia',
@@ -98,8 +107,25 @@ app.commandLine.appendSwitch('ppapi-flash-path', path.join(rootDir, flashPluginP
 function openModPanel() {
     modPanelWindow = new clubWindow_1.ClubWindow(branding.name + ' Mod Panel', branding.iconPath, 'none', new windowState_1.PageState('https://chotopia.us/play'), 950, 575);
 }
+<<<<<<< HEAD
+electron_updater_1.autoUpdater.on('update-downloaded', () => {
+    const dialogOpts = {
+        type: 'info',
+        buttons: ['Restart', 'Not Now. On next Restart'],
+        title: 'Update',
+        message: process.platform === 'win32' ? "Updated" : "",
+        detail: 'A New Version has been Downloaded. Restart Now to Complete the Update.'
+    };
+    Electron.dialog.showMessageBox(mainWindow.browser, dialogOpts);
+=======
+electron_updater_1.autoUpdater.on('error', (message) => {
+    console.error('There was a problem updating the application');
+    console.error(message);
+>>>>>>> 716b4132f85133174d602c469bacbf6ca6af8310
+});
 function startup() {
     mainWindow = new clubWindow_1.ClubWindow(branding.name, branding.iconPath, 'none', new windowState_1.PageState('about:blank'), 950, 575);
+    electron_updater_1.autoUpdater.checkForUpdatesAndNotify();
     function setRpc(rpc, state) {
         rpc.setActivity({
             details: branding.rpcDetails,
@@ -151,9 +177,12 @@ function startup() {
     mainWindow.browser.on('closed', () => {
         app.quit();
     });
+<<<<<<< HEAD
     if (!Electron.app.isPackaged)
         mainWindow.browser.webContents.openDevTools({ mode: 'undocked' });
-    mainWindow.navigate('https://chobots.world/fullscreen');
+=======
+    //if (!Electron.app.isPackaged) mainWindow.browser.webContents.openDevTools({mode: 'undocked'});
+>>>>>>> 716b4132f85133174d602c469bacbf6ca6af8310
     mainWindow.browser.webContents.on('ipc-message', (event, channel, ...args) => {
         switch (channel) {
             case "containerIsReady":
@@ -164,7 +193,7 @@ function startup() {
                         switch (channel) {
                             case "updateFinished":
                                 if (store.get('agreedToTerms')) {
-                                    mainWindow.navigate('https://chobots.world/fullscreen');
+                                    mainWindow.navigate('https://chobots.world/index');
                                     mainWindow.buttons = 'ingame';
                                 }
                                 else

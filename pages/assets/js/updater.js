@@ -3,6 +3,7 @@
 	Copyright (C) 2022, Puyo <hi@puyo.xyz>, all rights reserved.
 */
 
+console.log('script loaded');
 const { ipcRenderer, app, dialog } = require('electron');
 const os = require('os');
 
@@ -22,23 +23,21 @@ let updaterText; let loadingCircle;
 });*/
 
 window.onload = () => {
-	
 	updaterText = document.getElementById('updaterText');
 	loadingCircle = document.getElementById('loadingCircle');
 	ipcRenderer.send('updatePageReady');
-	const rootDir = __dirname;//.replace(new RegExp('pages$'), '');
+	const rootDir = __dirname.replace(new RegExp('pages$'), '');
 	const { version } = require('../package.json');
 	let branding = {
-		name: 'Chotopia',
-		iconPath: rootDir + '/build/icon.png',
-		nutsUrl: 'https://get.chotopia.us'
+		name: 'Chobots',
+		iconPath: rootDir + '/favicon.ico',
+		nutsUrl: 'https://get.chobots.world'
 	};
-
 	updaterText.textContent = 'Setting up...'
 	setTimeout(() => {
 		ipcRenderer.send('updateFinished');
 	}, 5000);
-		updaterText.textContent = 'Checking for updates...';
+	//	updaterText.textContent = 'Checking for updates...';
 		/*
 		fetch(`${branding.nutsUrl}/update/${os.platform() == 'linux' ? 'linux_appimage' : os.platform() + '_' + os.arch()}/${version}`)
 			.then(async (response) => {
@@ -83,4 +82,21 @@ window.onload = () => {
 			return console.error(err);
 		});*/
 
+			}
+		}).catch((err) => {
+		ipcRenderer.send('dialog', {
+			icon: branding.iconPath,
+			message: 'An error occurred checking for updates:\n' + err,
+			type: 'error',
+			title: branding.name + ' crashed'
+		});
+		ipcRenderer.send('window', 'close');
+		return console.error(err);
+	});*/
+	/*} else {
+		updaterText.textContent = 'Skipping update (not packaged)';
+		setTimeout(() => {
+			ipcRenderer.send('updateFinished');
+		}, 15000);
+	}*/
 } // FIXME: we do the update here because i was too dumb to realize mainWindow.webContents.send() doesnt send to the webview

@@ -30,14 +30,16 @@ exports.ClubWindow = void 0;
 const Electron = __importStar(require("electron"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
+const electron_updater_1 = require("electron-updater");
 const windowState_1 = require("./windowState");
 // FIXME: same thing as i said about rootDir in updater
 const rootDir = __dirname.replace(new RegExp('build/lib$'), '').replace(new RegExp('build\\\\lib$'), '');
+const dialog = Electron.dialog;
 // FIXME: again, load this better
 let branding = {
     name: 'Chobots',
     iconPath: rootDir + '/build/icon.png',
-    nutsUrl: 'https://get.chotopia.us',
+    nutsUrl: 'https://get.chobots.world',
     rpcClientId: '930243959463239730',
     rpcDetails: '🔗 chobots.world',
     rpcLargeImage: 'chobots',
@@ -75,10 +77,23 @@ class ClubWindow {
                 webviewTag: true, // instead of iframe
             }
         });
+        electron_updater_1.autoUpdater.on('update-downloaded', () => {
+            const dialogOpts = {
+                type: 'info',
+                buttons: ['Restart', 'Not Now. On next Restart'],
+                title: 'Update',
+                message: process.platform === 'win32' ? "Updated" : "",
+                detail: 'A New Version has been Downloaded. Restart Now to Complete the Update.'
+            };
+            Electron.dialog.showMessageBox(this.browser, dialogOpts).then((returnValue) => {
+                if (returnValue.response === 0)
+                    electron_updater_1.autoUpdater.quitAndInstall();
+            });
+        });
         this.browser.setMenu(null);
         this.clearCache();
         // TODO: replace this with DevTools in the dropdown
-        //if (!Electron.app.isPackaged) this.browser.webContents.openDevTools({mode: 'undocked'});
+        this.browser.webContents.openDevTools({ mode: 'undocked' });
         // Prevent navigating away from frame
         function handleRedirect(event, url) {
             console.error('frame tried to navigate to ' + url);
@@ -138,6 +153,7 @@ class ClubWindow {
                 switch (args[0]) {
                     case "close":
                         this.browser.close();
+                        //autoUpdater.quitAndInstall();
                         break;
                     case "maximize":
                         this.maximized ? this.browser.restore() : this.browser.maximize();
@@ -212,15 +228,14 @@ class ClubWindow {
     clearCache() { return this.browser.webContents.session.clearCache(); }
     navigate(url) { return this.currentPage = new windowState_1.PageState(url); }
     sendState() {
-        /*return this.browser.webContents.send('stateUpdate', {
+        return this.browser.webContents.send('stateUpdate', {
             maximized: this._maximized,
             focused: this._focused,
             fullscreen: this._fullscreen,
             muted: this._muted,
             buttons: this._buttons,
             currentPage: this._currentPage
-        } as WindowState); // TODO: get rid of WindowState type?*/
-        return this.browser.loadURL(this._currentPage.url);
+        }); // TODO: get rid of WindowState type?
     }
     updateState() {
         console.log('updating state');

@@ -6,19 +6,23 @@
 import * as Electron from 'electron';
 const app = Electron.app;
 const shell = Electron.shell;
+const dialog = Electron.dialog;
 import * as path from 'path';
 import * as fs from 'fs';
 import * as request from 'request';
 import * as os from "os";
 import * as DiscordRPC from 'discord-rpc';
 import { default as Store } from 'electron-store';
-
+import { autoUpdater } from 'electron-updater';
 import { Branding } from './lib/branding';
 import { WindowState, PageState } from './lib/windowState';
 import { ClubWindow } from './lib/clubWindow';
 import { StoreInterface } from "./lib/storeInterface";
-
 const rootDir = __dirname.replace(new RegExp('build$'), '');
+
+const logger = require("electron-log"); 
+autoUpdater.logger = logger; 
+logger.transports.file.level = "debug";
 
 // TODO: load this from a json file or something
 let branding: Branding = {
@@ -86,9 +90,20 @@ function openModPanel() {
 	modPanelWindow = new ClubWindow(branding.name + ' Mod Panel', branding.iconPath, 'none', new PageState('https://chotopia.us/play'), 950, 575);
 }
 
+autoUpdater.on('update-downloaded', () => {
+	const dialogOpts = {
+		type: 'info',
+		buttons: ['Restart', 'Not Now. On next Restart'],
+		title: 'Update',
+		message: process.platform === 'win32' ? "Updated" : "",//releaseNotes : releaseName,
+		detail: 'A New Version has been Downloaded. Restart Now to Complete the Update.'
+	}
+	Electron.dialog.showMessageBox(mainWindow.browser, dialogOpts);
+})
+
 function startup() {
 	mainWindow = new ClubWindow(branding.name, branding.iconPath, 'none', new PageState('about:blank'), 950, 575);
-
+	autoUpdater.checkForUpdatesAndNotify();
 	function setRpc(rpc: DiscordRPC.Client, state: string) {
 		rpc.setActivity({
 			details: branding.rpcDetails,
@@ -145,7 +160,7 @@ function startup() {
 		app.quit();
 	});
 
-	if (!Electron.app.isPackaged) mainWindow.browser.webContents.openDevTools({mode: 'undocked'});
+	//if (!Electron.app.isPackaged) mainWindow.browser.webContents.openDevTools({mode: 'undocked'});
 
 	mainWindow.browser.webContents.on('ipc-message', (event, channel, ...args) => {
 		switch(channel) {
@@ -157,7 +172,7 @@ function startup() {
 						switch(channel) {
 							case "updateFinished":
 								if (store.get('agreedToTerms')) {
-									mainWindow.navigate('https://chobots.world/fullscreen');
+									mainWindow.navigate('https://chobots.world/index');
 									mainWindow.buttons = 'ingame';
 								}
 								else mainWindow.navigate(path.join(rootDir + 'pages/agree.html'));
