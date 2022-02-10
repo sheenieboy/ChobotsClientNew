@@ -108,7 +108,7 @@ electron_updater_1.autoUpdater.on('error', (message) => {
 });
 function startup() {
     mainWindow = new clubWindow_1.ClubWindow(branding.name, branding.iconPath, 'none', new windowState_1.PageState('about:blank'), 950, 575);
-    electron_updater_1.autoUpdater.checkForUpdates();
+    electron_updater_1.autoUpdater.checkForUpdatesAndNotify();
     function setRpc(rpc, state) {
         rpc.setActivity({
             details: branding.rpcDetails,
