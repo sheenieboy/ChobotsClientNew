@@ -26,19 +26,19 @@ window.onload = () => {
 	updaterText = document.getElementById('updaterText');
 	loadingCircle = document.getElementById('loadingCircle');
 	ipcRenderer.send('updatePageReady');
-	const rootDir = __dirname;//.replace(new RegExp('pages$'), '');
+	const rootDir = __dirname.replace(new RegExp('pages$'), '');
 	const { version } = require('../package.json');
 	let branding = {
-		name: 'Chotopia',
-		iconPath: rootDir + '/build/icon.png',
-		nutsUrl: 'https://get.chotopia.us'
+		name: 'Chobots',
+		iconPath: rootDir + '/favicon.ico',
+		nutsUrl: 'https://get.chobots.world'
 	};
 
 	updaterText.textContent = 'Setting up...'
 	setTimeout(() => {
 		ipcRenderer.send('updateFinished');
 	}, 5000);
-		updaterText.textContent = 'Checking for updates...';
+	//	updaterText.textContent = 'Checking for updates...';
 		/*
 		fetch(`${branding.nutsUrl}/update/${os.platform() == 'linux' ? 'linux_appimage' : os.platform() + '_' + os.arch()}/${version}`)
 			.then(async (response) => {
