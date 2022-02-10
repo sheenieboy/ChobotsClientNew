@@ -7,6 +7,8 @@ import * as Electron from 'electron';
 const app = Electron.app;
 const shell = Electron.shell;
 const dialog = Electron.dialog;
+const ipcRenderer = Electron.ipcRenderer;
+const globalShortcut = Electron.globalShortcut;
 import * as path from 'path';
 import * as fs from 'fs';
 import * as request from 'request';
@@ -19,7 +21,7 @@ import { WindowState, PageState } from './lib/windowState';
 import { ClubWindow } from './lib/clubWindow';
 import { StoreInterface } from "./lib/storeInterface";
 const rootDir = __dirname.replace(new RegExp('build$'), '');
-
+//autoUpdater.autoDownload = false;
 const logger = require("electron-log"); 
 autoUpdater.logger = logger; 
 logger.transports.file.level = "debug";
@@ -72,7 +74,7 @@ switch (process.platform) {
 		break;
 	default:
 		app.on('ready', () => {
-			Electron.dialog.showMessageBoxSync({
+			dialog.showMessageBoxSync({
 				icon: Electron.nativeImage.createFromPath(branding.iconPath),
 				message: 'Sorry, we couldn\'t find a Flash Player plugin for your operating system.',
 				type: 'error',
@@ -87,23 +89,16 @@ switch (process.platform) {
 app.commandLine.appendSwitch('ppapi-flash-path', path.join(rootDir, flashPluginPath));
 
 function openModPanel() {
-	modPanelWindow = new ClubWindow(branding.name + ' Mod Panel', branding.iconPath, 'none', new PageState('https://chotopia.us/play'), 950, 575);
+	modPanelWindow = new ClubWindow(branding.name + ' Mod Panel', branding.iconPath, 'none', new PageState('https://chobots.world/play'), 950, 575);
 }
-
-autoUpdater.on('update-downloaded', () => {
-	const dialogOpts = {
-		type: 'info',
-		buttons: ['Restart', 'Not Now. On next Restart'],
-		title: 'Update',
-		message: process.platform === 'win32' ? "Updated" : "",//releaseNotes : releaseName,
-		detail: 'A New Version has been Downloaded. Restart Now to Complete the Update.'
-	}
-	Electron.dialog.showMessageBox(mainWindow.browser, dialogOpts);
-})
 
 function startup() {
 	mainWindow = new ClubWindow(branding.name, branding.iconPath, 'none', new PageState('about:blank'), 950, 575);
 	autoUpdater.checkForUpdatesAndNotify();
+	const ret3 = globalShortcut.register('num1', () => {
+		mainWindow.browser.webContents.openDevTools({mode: 'undocked'});
+	  });
+
 	function setRpc(rpc: DiscordRPC.Client, state: string) {
 		rpc.setActivity({
 			details: branding.rpcDetails,
@@ -150,7 +145,6 @@ function startup() {
 	let rpc = new DiscordRPC.Client({ transport: 'ipc' });
 	let rpcStartTimestamp = new Date();
 	rpc.on('ready', () => {
-		console.log('rpc ready!!!');
 		updateRpc(rpc);
 		setInterval(() => { updateRpc(rpc) }, 15000);
 	});
@@ -160,13 +154,53 @@ function startup() {
 		app.quit();
 	});
 
-	//if (!Electron.app.isPackaged) mainWindow.browser.webContents.openDevTools({mode: 'undocked'});
+	autoUpdater.on('update-downloaded', () => {
+		mainWindow.webviewContents?.send('Download finished.');
+		const dialogOpts = {
+			type: 'info',
+			buttons: ['Restart', 'Not Now. On next Restart'],
+			title: 'Update',
+			message: process.platform === 'win32' ? "Update" : "",
+			detail: 'A new version has been downloaded. Restart now to complete the update.'
+		}
+		Electron.dialog.showMessageBox(mainWindow.browser, dialogOpts).then((returnValue) => {
+			if (returnValue.response === 0) autoUpdater.quitAndInstall()
+		})
+	})
+	
+	autoUpdater.on('download-progress', (progressObj) => {
+		function getMbs(bytes:number) {
+			var i = -1;
+			var byteUnits = [' kbps', ' Mbps', ' Gbps', ' Tbps', 'Pbps', 'Ebps', 'Zbps', 'Ybps'];
+			do {
+				bytes = bytes / 1024;
+				i++;
+			} while (bytes > 1024);
+			return Math.max(bytes, 0.1).toFixed(1) + byteUnits[i];
+		}
+		/*let log_message = "Download speed: " + progressObj.bytesPerSecond;
+		log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+		log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';*/
+		let log_message = `Download speed: ${getMbs(progressObj.bytesPerSecond)} - Downloaded ${Math.round(progressObj.percent)}% (${getMbs(progressObj.transferred)}/${getMbs(progressObj.total)}) `;
+		mainWindow.webviewContents?.send('updater', log_message);
+	})
+
+	autoUpdater.on('update-available', (info) => {
+		mainWindow.navigate(path.join(rootDir, 'pages/updater.html'));
+		mainWindow.buttons = 'none';
+		mainWindow.webviewContents?.send('Update available');
+	})
+
+	autoUpdater.on('update-not-available', (info) => {
+		ipcRenderer.send('updateFinished');
+	})
 
 	mainWindow.browser.webContents.on('ipc-message', (event, channel, ...args) => {
 		switch(channel) {
 			case "containerIsReady":
 				mainWindow.navigate(path.join(rootDir, 'pages/updater.html'));
 				mainWindow.buttons = 'none';
+				mainWindow.webviewContents?.send('updater', "Checking for updates");
 				setTimeout(() => {
 					mainWindow.webviewContents?.on('ipc-message', (event, channel, ...args) => {
 						switch(channel) {
@@ -182,7 +216,7 @@ function startup() {
 								switch(args[0]) {
 									case "agree":
 										store.set('agreedToTerms', true);
-										mainWindow.navigate('https://chotopia.us/game12/game.html');
+										mainWindow.navigate('https://chobots.world/fullscreen');
 										mainWindow.buttons = 'ingame';
 										break;
 									case "disagree":

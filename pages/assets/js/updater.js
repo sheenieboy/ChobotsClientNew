@@ -9,34 +9,21 @@ const os = require('os');
 
 let updaterText; let loadingCircle;
 
-/*ipcRenderer.on('updater', (event, command, text) => {
-	console.log('updater event');
-	switch(command) {
-		case "setText":
-			console.log('setText: ' + text);
-			updaterText.innerHTML = text;
-			break;
-		case "hideLoader":
-			loadingCircle.style.display = "none";
-			break;
-	}
-});*/
+ipcRenderer.on('updater', function(event, text) {
+	console.log('setText: ' + text);
+	updaterText.innerHTML = text;
+});
 
 window.onload = () => {
 	updaterText = document.getElementById('updaterText');
 	loadingCircle = document.getElementById('loadingCircle');
-	ipcRenderer.send('updatePageReady');
 	const rootDir = __dirname.replace(new RegExp('pages$'), '');
 	const { version } = require('../package.json');
-	let branding = {
-		name: 'Chobots',
-		iconPath: rootDir + '/favicon.ico',
-		nutsUrl: 'https://get.chobots.world'
-	};
-	updaterText.textContent = 'Setting up...'
-	setTimeout(() => {
+	//updaterText.textContent = 'Update Available!'
+	
+	/*setTimeout(() => {
 		ipcRenderer.send('updateFinished');
-	}, 5000);
+	}, 5000);*/
 	//	updaterText.textContent = 'Checking for updates...';
 		/*
 		fetch(`${branding.nutsUrl}/update/${os.platform() == 'linux' ? 'linux_appimage' : os.platform() + '_' + os.arch()}/${version}`)

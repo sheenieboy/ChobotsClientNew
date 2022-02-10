@@ -1,8 +1,4 @@
 "use strict";
-/*
-    xyz.puyo.club, xyz.puyo.club.chotopia
-    Copyright (C) 2022, Puyo <hi@puyo.xyz>, all rights reserved.
-*/
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -30,7 +26,6 @@ exports.ClubWindow = void 0;
 const Electron = __importStar(require("electron"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const electron_updater_1 = require("electron-updater");
 const windowState_1 = require("./windowState");
 // FIXME: same thing as i said about rootDir in updater
 const rootDir = __dirname.replace(new RegExp('build/lib$'), '').replace(new RegExp('build\\\\lib$'), '');
@@ -77,23 +72,10 @@ class ClubWindow {
                 webviewTag: true, // instead of iframe
             }
         });
-        electron_updater_1.autoUpdater.on('update-downloaded', () => {
-            const dialogOpts = {
-                type: 'info',
-                buttons: ['Restart', 'Not Now. On next Restart'],
-                title: 'Update',
-                message: process.platform === 'win32' ? "Updated" : "",
-                detail: 'A New Version has been Downloaded. Restart Now to Complete the Update.'
-            };
-            Electron.dialog.showMessageBox(this.browser, dialogOpts).then((returnValue) => {
-                if (returnValue.response === 0)
-                    electron_updater_1.autoUpdater.quitAndInstall();
-            });
-        });
         this.browser.setMenu(null);
         this.clearCache();
         // TODO: replace this with DevTools in the dropdown
-        this.browser.webContents.openDevTools({ mode: 'undocked' });
+        //this.browser.webContents.openDevTools({mode: 'undocked'});
         // Prevent navigating away from frame
         function handleRedirect(event, url) {
             console.error('frame tried to navigate to ' + url);
@@ -153,7 +135,6 @@ class ClubWindow {
                 switch (args[0]) {
                     case "close":
                         this.browser.close();
-                        //autoUpdater.quitAndInstall();
                         break;
                     case "maximize":
                         this.maximized ? this.browser.restore() : this.browser.maximize();
