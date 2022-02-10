@@ -1,8 +1,3 @@
-/*
-	xyz.puyo.club, xyz.puyo.club.chotopia
-	Copyright (C) 2022, Puyo <hi@puyo.xyz>, all rights reserved.
-*/
-
 import * as uuid from 'uuid';
 
 class PageState {

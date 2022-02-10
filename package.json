@@ -1,6 +1,6 @@
 {
   "name": "@sheenieboy/chobots",
-  "icon": "favicon.ico",
+  "icon": "icon.png",
   "version": "1.0.3",
   "description": "Desktop client for Chobots.world",
   "main": "./build/main.js",
@@ -50,7 +50,7 @@
   "build": {
     "appId": "com.chobots.desktop",
     "productName": "Chobots",
-    "icon": "favicon.ico",
+    "icon": "icon.png",
     "asar": "false",
     "files": [
       "!src/*",
