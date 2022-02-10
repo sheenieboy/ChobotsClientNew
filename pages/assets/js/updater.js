@@ -80,7 +80,7 @@ window.onload = () => {
 			});
 			ipcRenderer.send('window', 'close');
 			return console.error(err);
-		});*/
+		});
 
 			}
 		}).catch((err) => {

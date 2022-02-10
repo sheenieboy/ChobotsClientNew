@@ -26,9 +26,9 @@ logger.transports.file.level = "debug";
 
 // TODO: load this from a json file or something
 let branding: Branding = {
-	name: 'Chotopia',
+	name: 'Chobots',
 	iconPath: rootDir + '/build/icon.png',
-	nutsUrl: 'https://get.chotopia.us',
+	nutsUrl: 'https://get.chobots.world',
 	rpcClientId: '930243959463239730',
 	rpcDetails: '🔗 chotopia.us',
 	rpcLargeImage: 'chotopia',

@@ -37,19 +37,15 @@ const electron_store_1 = __importDefault(require("electron-store"));
 const electron_updater_1 = require("electron-updater");
 const windowState_1 = require("./lib/windowState");
 const clubWindow_1 = require("./lib/clubWindow");
-const electron_updater_1 = require("electron-updater");
-const logger = require("electron-log");
-electron_updater_1.autoUpdater.logger = logger;
-logger.transports.file.level = "debug";
 const rootDir = __dirname.replace(new RegExp('build$'), '');
 const logger = require("electron-log");
 electron_updater_1.autoUpdater.logger = logger;
 logger.transports.file.level = "debug";
 // TODO: load this from a json file or something
 let branding = {
-    name: 'Chotopia',
+    name: 'Chobots',
     iconPath: rootDir + '/build/icon.png',
-    nutsUrl: 'https://get.chotopia.us',
+    nutsUrl: 'https://get.chobots.world',
     rpcClientId: '930243959463239730',
     rpcDetails: '🔗 chotopia.us',
     rpcLargeImage: 'chotopia',
@@ -107,7 +103,6 @@ app.commandLine.appendSwitch('ppapi-flash-path', path.join(rootDir, flashPluginP
 function openModPanel() {
     modPanelWindow = new clubWindow_1.ClubWindow(branding.name + ' Mod Panel', branding.iconPath, 'none', new windowState_1.PageState('https://chotopia.us/play'), 950, 575);
 }
-<<<<<<< HEAD
 electron_updater_1.autoUpdater.on('update-downloaded', () => {
     const dialogOpts = {
         type: 'info',
@@ -117,11 +112,6 @@ electron_updater_1.autoUpdater.on('update-downloaded', () => {
         detail: 'A New Version has been Downloaded. Restart Now to Complete the Update.'
     };
     Electron.dialog.showMessageBox(mainWindow.browser, dialogOpts);
-=======
-electron_updater_1.autoUpdater.on('error', (message) => {
-    console.error('There was a problem updating the application');
-    console.error(message);
->>>>>>> 716b4132f85133174d602c469bacbf6ca6af8310
 });
 function startup() {
     mainWindow = new clubWindow_1.ClubWindow(branding.name, branding.iconPath, 'none', new windowState_1.PageState('about:blank'), 950, 575);
@@ -177,12 +167,7 @@ function startup() {
     mainWindow.browser.on('closed', () => {
         app.quit();
     });
-<<<<<<< HEAD
-    if (!Electron.app.isPackaged)
-        mainWindow.browser.webContents.openDevTools({ mode: 'undocked' });
-=======
     //if (!Electron.app.isPackaged) mainWindow.browser.webContents.openDevTools({mode: 'undocked'});
->>>>>>> 716b4132f85133174d602c469bacbf6ca6af8310
     mainWindow.browser.webContents.on('ipc-message', (event, channel, ...args) => {
         switch (channel) {
             case "containerIsReady":
