@@ -12,11 +12,15 @@ import * as request from 'request';
 import * as os from "os";
 import * as DiscordRPC from 'discord-rpc';
 import { default as Store } from 'electron-store';
-
 import { Branding } from './lib/branding';
 import { WindowState, PageState } from './lib/windowState';
 import { ClubWindow } from './lib/clubWindow';
 import { StoreInterface } from "./lib/storeInterface";
+import { autoUpdater } from 'electron-updater';
+
+const logger = require("electron-log"); 
+autoUpdater.logger = logger; 
+logger.transports.file.level = "debug";
 
 const rootDir = __dirname.replace(new RegExp('build$'), '');
 
@@ -86,9 +90,14 @@ function openModPanel() {
 	modPanelWindow = new ClubWindow(branding.name + ' Mod Panel', branding.iconPath, 'none', new PageState('https://chotopia.us/play'), 950, 575);
 }
 
+autoUpdater.on('error', (message: any) => {
+    console.error('There was a problem updating the application')
+    console.error(message)
+})
+
 function startup() {
 	mainWindow = new ClubWindow(branding.name, branding.iconPath, 'none', new PageState('about:blank'), 950, 575);
-
+	autoUpdater.checkForUpdatesAndNotify();
 	function setRpc(rpc: DiscordRPC.Client, state: string) {
 		rpc.setActivity({
 			details: branding.rpcDetails,
@@ -145,7 +154,7 @@ function startup() {
 		app.quit();
 	});
 
-	if (!Electron.app.isPackaged) mainWindow.browser.webContents.openDevTools({mode: 'undocked'});
+	//if (!Electron.app.isPackaged) mainWindow.browser.webContents.openDevTools({mode: 'undocked'});
 
 	mainWindow.browser.webContents.on('ipc-message', (event, channel, ...args) => {
 		switch(channel) {

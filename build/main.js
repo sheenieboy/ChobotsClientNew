@@ -35,6 +35,10 @@ const DiscordRPC = __importStar(require("discord-rpc"));
 const electron_store_1 = __importDefault(require("electron-store"));
 const windowState_1 = require("./lib/windowState");
 const clubWindow_1 = require("./lib/clubWindow");
+const electron_updater_1 = require("electron-updater");
+const logger = require("electron-log");
+electron_updater_1.autoUpdater.logger = logger;
+logger.transports.file.level = "debug";
 const rootDir = __dirname.replace(new RegExp('build$'), '');
 // TODO: load this from a json file or something
 let branding = {
@@ -98,8 +102,13 @@ app.commandLine.appendSwitch('ppapi-flash-path', path.join(rootDir, flashPluginP
 function openModPanel() {
     modPanelWindow = new clubWindow_1.ClubWindow(branding.name + ' Mod Panel', branding.iconPath, 'none', new windowState_1.PageState('https://chotopia.us/play'), 950, 575);
 }
+electron_updater_1.autoUpdater.on('error', (message) => {
+    console.error('There was a problem updating the application');
+    console.error(message);
+});
 function startup() {
     mainWindow = new clubWindow_1.ClubWindow(branding.name, branding.iconPath, 'none', new windowState_1.PageState('about:blank'), 950, 575);
+    electron_updater_1.autoUpdater.checkForUpdates();
     function setRpc(rpc, state) {
         rpc.setActivity({
             details: branding.rpcDetails,
@@ -151,8 +160,7 @@ function startup() {
     mainWindow.browser.on('closed', () => {
         app.quit();
     });
-    if (!Electron.app.isPackaged)
-        mainWindow.browser.webContents.openDevTools({ mode: 'undocked' });
+    //if (!Electron.app.isPackaged) mainWindow.browser.webContents.openDevTools({mode: 'undocked'});
     mainWindow.browser.webContents.on('ipc-message', (event, channel, ...args) => {
         switch (channel) {
             case "containerIsReady":
