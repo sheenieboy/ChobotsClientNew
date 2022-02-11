@@ -8,10 +8,10 @@ on:
 
 jobs:
   release:
-    runs-on: ${{ macos-latest }}
+    runs-on: macos-latest
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, linux-latest]
+        os: [windows-latest, macos-latest, linux-latest]
 
     steps:
       - name: Check out Git repository
