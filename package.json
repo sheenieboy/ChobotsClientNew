@@ -65,6 +65,10 @@
     "mac": {
       "publish": "github"
     },
+    "linux": {
+      "executableName": "Chobots",
+      "artifactName": "${productName}-${version}.${ext}"
+    },
     "dmg": {
       "window": {
         "width": "540",
