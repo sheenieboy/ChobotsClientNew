@@ -8,7 +8,7 @@ on: push
 
 jobs:
   build_on_linux:
-    runs-on: linux-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
