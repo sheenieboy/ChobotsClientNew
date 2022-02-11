@@ -166,7 +166,7 @@ function startup() {
 	autoUpdater.on('download-progress', (progressObj) => {
 		function getMbs(bytes:number) {
 			var i = -1;
-			var byteUnits = [' kbps', ' Mbps', ' Gbps', ' Tbps', 'Pbps', 'Ebps', 'Zbps', 'Ybps'];
+			var byteUnits = [' kb', ' Mb', ' Gb', ' Tbps', 'Pbps', 'Ebps', 'Zbps', 'Ybps'];
 			do {
 				bytes = bytes / 1024;
 				i++;
@@ -176,7 +176,7 @@ function startup() {
 		/*let log_message = "Download speed: " + progressObj.bytesPerSecond;
 		log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
 		log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';*/
-		let log_message = `Download speed: ${getMbs(progressObj.bytesPerSecond)} - Downloaded ${Math.round(progressObj.percent)}% (${getMbs(progressObj.transferred)}/${getMbs(progressObj.total)}) `;
+		let log_message = `Download speed: ${getMbs(progressObj.bytesPerSecond)}ps - Downloaded ${Math.round(progressObj.percent)}% (${getMbs(progressObj.transferred)}/${getMbs(progressObj.total)}) `;
 		mainWindow.webviewContents?.send('updater', log_message);
 	})
 

@@ -1,7 +1,7 @@
 {
   "name": "@sheenieboy/chobots",
   "icon": "icon.png",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Desktop client for Chobots.world",
   "main": "./build/main.js",
   "packageManager": "yarn@3.1.1",
