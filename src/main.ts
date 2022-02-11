@@ -1,13 +1,7 @@
-/*
-    xyz.puyo.club, xyz.puyo.club.chotopia
-    Copyright (C) 2022, Puyo <hi@puyo.xyz>, all rights reserved.
-*/
-
 import * as Electron from 'electron';
 const app = Electron.app;
 const shell = Electron.shell;
 const dialog = Electron.dialog;
-const ipcRenderer = Electron.ipcRenderer;
 const globalShortcut = Electron.globalShortcut;
 import * as path from 'path';
 import * as fs from 'fs';
@@ -16,6 +10,7 @@ import * as os from "os";
 import * as DiscordRPC from 'discord-rpc';
 import { default as Store } from 'electron-store';
 import { autoUpdater } from 'electron-updater';
+import { ipcRenderer } from 'electron';
 import { Branding } from './lib/branding';
 import { WindowState, PageState } from './lib/windowState';
 import { ClubWindow } from './lib/clubWindow';
@@ -191,27 +186,35 @@ function startup() {
 		mainWindow.webviewContents?.send('Update available');
 	})
 
-	autoUpdater.on('update-not-available', (info) => {
-		ipcRenderer.send('updateFinished');
+	autoUpdater.on('error', (error) => {
+		console.log("error: " + error)
 	})
+	var UpdateNotAvailable: boolean = false;
+	autoUpdater.on('update-not-available', (info) => {
+		UpdateFinished()
+	})
+
+	function UpdateFinished() {
+		if (store.get('agreedToTerms')) {
+			mainWindow.navigate('https://chobots.world/fullscreen');
+			mainWindow.buttons = 'ingame';
+		}
+		else mainWindow.navigate(path.join(rootDir + 'pages/agree.html'));
+		if (store.get('modPanelEnabled')) openModPanel();
+	}
 
 	mainWindow.browser.webContents.on('ipc-message', (event, channel, ...args) => {
 		switch(channel) {
 			case "containerIsReady":
 				mainWindow.navigate(path.join(rootDir, 'pages/updater.html'));
 				mainWindow.buttons = 'none';
-				mainWindow.webviewContents?.send('updater', "Checking for updates");
 				setTimeout(() => {
+					if (!Electron.app.isPackaged) {
+						UpdateFinished()
+					}
+					mainWindow.webviewContents?.send('updater', "Checking for updates");
 					mainWindow.webviewContents?.on('ipc-message', (event, channel, ...args) => {
 						switch(channel) {
-							case "updateFinished":
-								if (store.get('agreedToTerms')) {
-									mainWindow.navigate('https://chobots.world/index');
-									mainWindow.buttons = 'ingame';
-								}
-								else mainWindow.navigate(path.join(rootDir + 'pages/agree.html'));
-								if (store.get('modPanelEnabled')) openModPanel();
-								break;
 							case "agreePage":
 								switch(args[0]) {
 									case "agree":
@@ -230,7 +233,7 @@ function startup() {
 								break;
 						}
 					});
-				}, 100); // FIXME: dumb way to avoid race condition. fix by moving this out and having ClubWindow have an event for when window.webviewContents isnt undefined
+				}, 200); // FIXME: dumb way to avoid race condition. fix by moving this out and having ClubWindow have an event for when window.webviewContents isnt undefined
 				break;
 			default:
 				break;

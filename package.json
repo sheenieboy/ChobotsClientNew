@@ -1,17 +1,17 @@
 {
   "name": "@sheenieboy/chobots",
   "icon": "icon.png",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "description": "Desktop client for Chobots.world",
   "main": "./build/main.js",
   "packageManager": "yarn@3.1.1",
   "scripts": {
     "build": "tsc",
     "start": "tsc && electron .",
-    "make-win": "electron-builder build --win --publish never",
-    "make-mac": "electron-builder build --mac --publish never",
-    "make-win-publish": "electron-builder build --win --publish always",
-    "make-mac-publish": "electron-builder build --mac --publish always"
+    "make-win": "tsc && electron-builder build --win --publish never",
+    "make-mac": "tsc && electron-builder build --mac --publish never",
+    "make-win-publish": "tsc && electron-builder build --win --publish always",
+    "make-mac-publish": "tsc && electron-builder build --mac --publish always"
   },
   "devDependencies": {
     "@types/electron-store": "^3.2.0",

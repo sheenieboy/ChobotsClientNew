@@ -1,5 +1,6 @@
 // TODO: (not related to code below) make it so you can autohide the top bar in fullscreen
-const { ipcRenderer, shell } = require('electron');
+const { app, ipcRenderer, shell } = require('electron');
+const { version } = require('../package.json');
 let titlebar;
 let layouts = {};
 let currentPageId = '';
@@ -9,6 +10,7 @@ let isContentFrameDomReady = false;
 
 window.onload = () => {
 	titlebar = document.getElementById('titlebar');
+	document.getElementById('Version').innerHTML = "Chobots v" + version;
 
 	layouts.windowButtons = {
 		container: document.getElementById('window-buttons'),
