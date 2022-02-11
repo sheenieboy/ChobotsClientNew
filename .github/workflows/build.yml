@@ -8,8 +8,7 @@ on:
 
 jobs:
   release:
-    runs-on: macos-latest
-
+    runs-on: ${{ macos-latest }}
     strategy:
       matrix:
         os: [macos-latest, windows-latest, linux-latest]
