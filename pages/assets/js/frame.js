@@ -158,10 +158,8 @@ ipcRenderer.on('stateUpdate', (event, newState) => {
 	}
 
 	if (newState.currentPage.id != currentPageId) {
-		//contentFrame.loadURL(newState.currentPage.url);
 		contentFrame.src = "about:blank";
 		contentFrame.src = newState.currentPage.url;
 		currentPageId = newState.currentPage.id;
-		contentFrame.removeAttribute("nodeIntegration");// = true;
 	}
 });

@@ -69,10 +69,7 @@ class ClubWindow {
                 nodeIntegration: true,
                 plugins: true,
                 webSecurity: false,
-                webviewTag: true,
-                preload: path_1.default.join(__dirname, 'preload.js'),
-                devTools: true,
-                contextIsolation: false,
+                webviewTag: true, // instead of iframe
             }
         });
         this.browser.setMenu(null);
@@ -97,6 +94,7 @@ class ClubWindow {
         // Handle frame events
         this.browser.webContents.on('ipc-message', (event, channel, ...args) => { this.handleIpcMessage(event, channel, args); }); // we have to call it inside an arrow function, or this = EventEmitter and not ClubWindow
         this.browser.loadFile(path_1.default.join(rootDir, '/pages/frame.html')).catch(console.error);
+        //this.browser.loadURL("https://chobots.world/index").catch(console.error);
         this.browser.webContents.on('did-stop-loading', () => {
             this.updateState();
         });
