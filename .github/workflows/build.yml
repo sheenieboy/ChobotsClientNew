@@ -9,9 +9,9 @@ on: push
 jobs:
   build_on_linux:
     runs-on: macos-latest
-     strategy:
-      matrix:
-        os: linux-latest
+    strategy:
+     matrix:
+      os: [linux-latest]
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
