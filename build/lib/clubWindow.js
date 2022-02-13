@@ -69,7 +69,10 @@ class ClubWindow {
                 nodeIntegration: true,
                 plugins: true,
                 webSecurity: false,
-                webviewTag: true, // instead of iframe
+                webviewTag: true,
+                preload: path_1.default.join(__dirname, 'preload.js'),
+                devTools: true,
+                contextIsolation: false,
             }
         });
         this.browser.setMenu(null);

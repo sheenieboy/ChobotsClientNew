@@ -11,11 +11,28 @@
 </head>
 
 <body>
+	
 	<div id="titlebar">
 		<div class="buttons" id="button-layout-ingame">
-			<div id="buttons-ingame-hamburger" onclick="butt(this.id)">
-				<img class="icon-only" src="assets/icons/hamburger-menu.png"></img>
+			<div id="menuToggle" class="ham">
+				<input type="checkbox"  class="ham" />
+				<span></span>
+				<span></span>
+				<span></span>
+				<ul id="menu">
+				<a href="#"><li>Home</li></a>
+				<a href="#"><li>About</li></a>
+				<a href="#"><li>Info</li></a>
+				<a href="#"><li>Developer Tools</li></a>
+				<a href="#"><li>About</li></a>
+				</ul>
 			</div>
+
+			<!--<div id="buttons-ingame-hamburger" onclick="butt(this.id)">
+				<img class="icon-only" src="assets/icons/hamburger-menu.png"></img>
+			</div>-->
+					
+
 			<div id="buttons-ingame-fullscreen" onclick="butt(this.id)">
 				<img src="assets/icons/go-fullscreen.png"></img>
 				<span>Fullscreen</span>
@@ -44,7 +61,6 @@
 
 		<div class="title">
 			<p id="Version" style="display:inline;">Chobots</p>
-			<!-- TODO: load this from branding-->
 		</div>
 		<div class="window-buttons">
 			<div id="window-about" onclick="butt(this.id)">
@@ -63,8 +79,10 @@
 			</a></div>
 		</div>
 	</div>
+</div></div>
 	<div id="content">
-		<webview plugins nodeIntegration frameBorder="0" id="content-iframe" src="about:blank"></webview>
+		<webview plugins frameBorder="0" id="content-iframe" src="about:blank"></webview>
 	</div>
+
 </body>
 </html>
