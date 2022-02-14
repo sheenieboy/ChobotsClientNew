@@ -182,7 +182,7 @@ class ClubWindow {
                                 break;
                             case "chobotsca":
                                 this.clearCache();
-                                this.navigate("https://chobots.ca/game/");
+                                this.navigate("https://www.chobots.icu/game-ca/client.swf");
                                 break;
                             default:
                                 console.error('tried to click a button that does not exist, on a layout that DOES exist');
